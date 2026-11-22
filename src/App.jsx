@@ -2,249 +2,163 @@ import React, { useState } from "react"
 import {
     Coffee,
     Home,
-    Users,
     Heart,
-    Calendar,
     MapPin,
     ArrowRight,
     CheckCircle2,
     BookOpen,
-    Sparkles,
+    Users,
+    Calendar,
+    Send,
     Menu,
     X,
-    ChevronDown,
-    Send,
-    Compass,
-    ShieldCheck,
 } from "lucide-react"
 import "./App.css"
 
 // ============================================================================
 // EDITABLE CHURCH DATA CONFIGURATION
-// Update any text, schedules, or details here in VS Code and push to GitHub.
+// Edit any text or details here in VS Code and push to GitHub Pages.
 // ============================================================================
 const CHURCH_DATA = {
     name: "Rooted Life Church",
-    shortName: "Rooted Life",
-    location: "Ennis & Ellis County, Texas",
+    location: "Ennis, Texas",
+    contactEmail: "rootedlifechurchtx@gmail.com",
     logoPath: `${import.meta.env.BASE_URL}logo.png`,
     themeVerse: {
         reference: "Colossians 2:6–7",
         text: "Therefore, as you received Christ Jesus the Lord, so walk in him, rooted and built up in him and established in the faith, just as you were taught, abounding in thanksgiving.",
     },
     mission:
-        "Our mission is to help people root their lives in Jesus. We INVITE people into genuine belonging, INVEST in their spiritual development through life-on-life discipleship, and IGNITE a movement of hope that multiplies across Ellis County.",
-    vision: "Our vision is to see a growing network of relational communities across Ellis County where those who are religiously unaffiliated, weary of institutional religion, or struggling with the hardships of life find a place to belong, a family to share life with, and a soul renewed by the grace of Jesus.",
-    pillars: [
-        {
-            title: "INVITE",
-            subtitle: "Magnifying the Savior",
-            description:
-                "We invite the weary and searching to see a real, unpolished picture of Jesus—stripping away religious performance, consumerism, and institutional noise in an environment of raw authenticity and safety.",
-        },
-        {
-            title: "INVEST",
-            subtitle: "Mobilizing the Members",
-            description:
-                "No one is meant to be a bystander. From day one, we invite people out of isolation and into a spiritual family—healing hurts, developing faith, and mobilizing unique, God-given gifts to serve our neighbors.",
-        },
-        {
-            title: "IGNITE",
-            subtitle: "Multiplying Disciples",
-            description:
-                "We measure health not by how large a room gets, but by how many healthy disciples are raised up. We equip everyday people to lead and multiply relational communities of hope across every neighborhood in Ellis County.",
-        },
-    ],
-    pathways: [
-        {
-            id: "rooted",
-            badge: "Step 1 • Public Spaces",
-            title: "Rooted Groups",
-            schedule: "Weekly • 1–2 Hours (Saturdays at Local Coffee Shops)",
-            size: "3–4 People",
-            summary:
-                "Our main entry point and open conversation space. Meet at a local business or coffee shop to explore the fundamentals of Christianity and honest questions about life and faith—no church background required.",
-            highlights: [
-                "Free coffee for first-time guests",
-                "7-week guided conversations through the Gospel of Mark",
-                "Safe, low-pressure space for honest questions and doubts",
-                "Designed for seekers, skeptics, and anyone exploring faith",
-            ],
-            ctaText: "Join a Rooted Group",
-        },
-        {
-            id: "branches",
-            badge: "Step 2 • Host Homes",
-            title: "Branches",
-            schedule: "Sundays • 1–2 Hours in Host Homes",
-            size: "8–12 People",
-            summary:
-                "Our primary home-based discipleship communities modeled after Acts 2:42–47. Share meals, build deep friendships, study Scripture together, pray for one another, and serve our local community side-by-side.",
-            highlights: [
-                "Shared meals, genuine fellowship, and life-on-life care",
-                "Interactive, inductive Bible study (no heavy workbooks)",
-                "Confidential, supportive environment for real-life accountability",
-                "Monthly collective Sunday gatherings of Branches for worship & communion",
-            ],
-            ctaText: "Find a Branch",
-        },
-        {
-            id: "cultivate",
-            badge: "Step 3 • Leadership & Multiplication",
-            title: "Cultivate Groups",
-            schedule: "Weekly • 1–2 Hours (By Invitation)",
-            size: "Up to 3 People",
-            summary:
-                "Intimate leadership and disciple-making groups designed to equip emerging leaders to facilitate new Rooted Groups, host Branches, and help plant new relational churches across Ellis County.",
-            highlights: [
-                "High-trust accountability and rotating facilitation practice",
-                "Focused on spiritual maturity and caring for people well",
-                "Equips everyday believers to multiply healthy groups",
-            ],
-            ctaText: "Learn About Leadership",
-        },
-    ],
+        "Helping people root their lives in Jesus through honest conversations, shared meals, and authentic community across Ennis.",
     values: [
         {
             title: "True Community",
-            scripture: "Acts 2:42–47 • Galatians 6:2",
             description:
-                "Gathering together, sharing meals, carrying one another’s burdens, and doing real life side-by-side.",
+                "Sharing meals, carrying one another’s burdens, and doing real life side-by-side.",
         },
         {
             title: "Disciple Making & Strong Families",
-            scripture: "2 Timothy 2:2 • Ephesians 5:22–33",
             description:
-                "Leading by example, investing in spouses and children, and helping everyday people grow into mature followers of Jesus.",
+                "Investing in marriages, kids, and everyday people growing into followers of Jesus.",
         },
         {
             title: "Growing Through Groups",
-            scripture: "Colossians 1:28–29 • Acts 2:42–47",
             description:
-                "Prioritizing intimate, reproducible home and coffee-shop gatherings over massive institutional programs.",
+                "Trading rows in a big auditorium for circles in local coffee shops and living rooms.",
         },
         {
             title: "Compassion for People",
-            scripture: "Matthew 9:35–38 • John 4:1–30",
             description:
-                "Listening well, meeting practical needs, and treating every neighbor with dignity and grace because people matter to God.",
+                "Listening well, meeting practical needs, and welcoming everyone with grace—no masks required.",
         },
         {
             title: "Every Member a Minister",
-            scripture: "Ephesians 4:11–16 • 2 Timothy 4:2",
             description:
-                "Empowering every believer to use their gifts, bless their neighbors, and share the hope of Jesus in everyday life.",
+                "Equipping everyday people to love their neighbors and bring hope to Ennis.",
         },
     ],
-    outreachProjects: [
+    groups: [
         {
-            title: "New Mom & Crisis Pregnancy Care",
-            detail: "Providing first-week meals, baby gift baskets, and compassionate support for new mothers and women facing unplanned pregnancies.",
+            id: "rooted",
+            badge: "Start Here • Public Spaces",
+            title: "Rooted Groups",
+            schedule: "Weekly • 1–2 Hours (Local Coffee Shops)",
+            size: "3–4 People",
+            description:
+                "A casual, 7-week conversation exploring the fundamentals of Christianity and honest questions about life and faith. No church background needed—and your first coffee is on us.",
+            perks: [
+                "Free coffee for first-time guests",
+                "7-week guided look at the life of Jesus in Mark",
+                "Zero pressure to pray out loud or have all the answers",
+            ],
+            cta: "Join a Rooted Group",
         },
         {
-            title: "Homeless & Shelter Support",
-            detail: "Supplying sacked lunches, hygiene kits, blankets, hats, and volunteer hours at local shelters and food pantries.",
-        },
-        {
-            title: "Local School Partnerships",
-            detail: "Adopting local classrooms in Ellis County, providing teacher supplies, and distributing backpacks filled with school gear.",
-        },
-        {
-            title: "Neighbors, Widows & Single Moms",
-            detail: "Practical home repairs for widows and low-income families, Mother’s Day dinners, and community park cookouts.",
-        },
-    ],
-    annualCalendar: [
-        {
-            month: "January",
-            focus: "Shelter support & winter blankets/hats drive",
-        },
-        {
-            month: "March / April",
-            focus: "Easter Impact Week & neighborhood service",
-        },
-        { month: "May", focus: "Mother’s Day honor dinner for moms & widows" },
-        {
-            month: "August",
-            focus: "Back-to-School Impact Week & backpack giveaway",
-        },
-        {
-            month: "September",
-            focus: "Local Food Pantry volunteer & supply drive",
-        },
-        {
-            month: "October",
-            focus: "Fall neighborhood cleanups & homeless meal outreach",
-        },
-        { month: "November", focus: "Community Thanksgiving celebration" },
-        {
-            month: "December",
-            focus: "Christmas toy drive for children in need",
-        },
-    ],
-    faqs: [
-        {
-            question:
-                "Do I need a church background or Bible knowledge to attend?",
-            answer: "Not at all. Rooted Groups are built specifically for people who are exploring faith, asking tough questions, or returning after stepping away from church. You will never be put on the spot to pray out loud or read if you prefer just to listen.",
-        },
-        {
-            question:
-                "What is the difference between a Rooted Group and a Branch?",
-            answer: "Rooted Groups are short, 7-week conversational gatherings in local coffee shops focused on exploring the core message of Jesus. Branches are ongoing weekly gatherings in host homes (8–12 people) where we share a meal, study Scripture together, and support each other like family.",
-        },
-        {
-            question: "Do you meet in a traditional church building?",
-            answer: "We are a simple, relational church network. Most of our life happens in local coffee shops and host homes across Ennis and Ellis County, with all Branches coming together once a month on Sunday for collective worship, communion, and celebration.",
-        },
-        {
-            question: "What about kids and families?",
-            answer: "Strong families are one of our core values. Many of our Branches are family-friendly and grouped around shared life stages and neighborhoods so kids and parents can grow together.",
+            id: "branches",
+            badge: "Grow Deeper • Host Homes",
+            title: "Branches",
+            schedule: "Sundays • 1–2 Hours in Host Homes",
+            size: "8–12 People",
+            description:
+                "Our weekly home-based church communities. We share a meal, open the Bible together, pray for one another, and serve our neighborhoods like family.",
+            perks: [
+                "Shared meals and genuine, family-style friendships",
+                "Interactive, conversational Bible study",
+                "Monthly collective Sunday gathering for worship & communion",
+            ],
+            cta: "Find a Branch",
         },
     ],
 }
 
 export default function App() {
-    const [activeTab, setActiveTab] = useState("home")
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-    const [openFaq, setOpenFaq] = useState(0)
     const [formState, setFormState] = useState({
         name: "",
         email: "",
-        city: "Ennis",
-        interest: "Rooted Group (Coffee Shop)",
+        interest: "Rooted Groups",
         message: "",
     })
-    const [submitted, setSubmitted] = useState(false)
+    const [status, setStatus] = useState("idle") // 'idle' | 'submitting' | 'success' | 'error'
 
-    const navigateTo = (tab) => {
-        setActiveTab(tab)
+    const scrollToSection = (id) => {
         setMobileMenuOpen(false)
-        window.scrollTo({ top: 0, behavior: "smooth" })
+        const el = document.getElementById(id)
+        if (el) {
+            el.scrollIntoView({ behavior: "smooth" })
+        }
     }
 
-    const handleFormSubmit = (e) => {
+    const handleSelectGroup = (groupTitle) => {
+        setFormState((prev) => ({ ...prev, interest: groupTitle }))
+        scrollToSection("connect")
+    }
+
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        setSubmitted(true)
-    }
+        setStatus("submitting")
 
-    const navItems = [
-        { id: "home", label: "Home" },
-        { id: "about", label: "Who We Are" },
-        { id: "groups", label: "Groups & Branches" },
-        { id: "outreach", label: "Serve Ellis County" },
-        { id: "connect", label: "Get Connected" },
-    ]
+        try {
+            const response = await fetch(
+                `https://formsubmit.co/ajax/${CHURCH_DATA.contactEmail}`,
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                    body: JSON.stringify({
+                        _subject: `Rooted Life Ennis Website: ${formState.interest}`,
+                        Name: formState.name,
+                        Email: formState.email,
+                        Interest: formState.interest,
+                        Message: formState.message || "(No message provided)",
+                    }),
+                },
+            )
+
+            if (response.ok) {
+                setStatus("success")
+            } else {
+                setStatus("error")
+            }
+        } catch {
+            setStatus("error")
+        }
+    }
 
     return (
         <div className="app-shell">
-            {/* Top Navigation */}
+            {/* Header */}
             <header className="site-header">
                 <div className="container header-inner">
-                    <button
-                        type="button"
-                        className="brand-button"
-                        onClick={() => navigateTo("home")}
+                    <a
+                        href="#top"
+                        className="brand-link"
+                        onClick={(e) => {
+                            e.preventDefault()
+                            window.scrollTo({ top: 0, behavior: "smooth" })
+                        }}
                     >
                         <img
                             src={CHURCH_DATA.logoPath}
@@ -252,28 +166,29 @@ export default function App() {
                             className="brand-logo-img"
                         />
                         <div className="brand-text">
-                            <span className="brand-title">Rooted Life</span>
-                            <span className="brand-subtitle">
-                                CHURCH • ELLIS COUNTY
+                            <span className="brand-title">
+                                Rooted Life Church
                             </span>
                         </div>
-                    </button>
+                    </a>
 
-                    <nav className="desktop-nav" aria-label="Main Navigation">
-                        {navItems.map((item) => (
-                            <button
-                                key={item.id}
-                                type="button"
-                                className={`nav-link ${activeTab === item.id ? "active" : ""}`}
-                                onClick={() => navigateTo(item.id)}
-                            >
-                                {item.label}
-                            </button>
-                        ))}
+                    <nav className="desktop-nav" aria-label="Primary">
+                        <button
+                            type="button"
+                            onClick={() => scrollToSection("who-we-are")}
+                        >
+                            Who We Are
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => scrollToSection("groups")}
+                        >
+                            Rooted & Branches
+                        </button>
                         <button
                             type="button"
                             className="btn btn-primary btn-sm"
-                            onClick={() => navigateTo("connect")}
+                            onClick={() => scrollToSection("connect")}
                         >
                             Grab Coffee With Us
                         </button>
@@ -282,7 +197,7 @@ export default function App() {
                     <button
                         type="button"
                         className="mobile-menu-toggle"
-                        aria-label="Toggle menu"
+                        aria-label="Toggle Menu"
                         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                     >
                         {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -291,20 +206,22 @@ export default function App() {
 
                 {mobileMenuOpen && (
                     <div className="mobile-nav">
-                        {navItems.map((item) => (
-                            <button
-                                key={item.id}
-                                type="button"
-                                className={`mobile-nav-link ${activeTab === item.id ? "active" : ""}`}
-                                onClick={() => navigateTo(item.id)}
-                            >
-                                {item.label}
-                            </button>
-                        ))}
                         <button
                             type="button"
-                            className="btn btn-primary mobile-cta"
-                            onClick={() => navigateTo("connect")}
+                            onClick={() => scrollToSection("who-we-are")}
+                        >
+                            Who We Are
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => scrollToSection("groups")}
+                        >
+                            Rooted & Branches
+                        </button>
+                        <button
+                            type="button"
+                            className="btn btn-primary"
+                            onClick={() => scrollToSection("connect")}
                         >
                             Grab Coffee With Us
                         </button>
@@ -312,757 +229,340 @@ export default function App() {
                 )}
             </header>
 
-            {/* Main Content Area */}
-            <main className="main-content">
-                {/* ================= HOME VIEW ================= */}
-                {activeTab === "home" && (
-                    <>
-                        <section className="hero-section">
-                            <div className="container hero-grid">
-                                <div className="hero-copy">
-                                    <div className="location-pill">
-                                        <MapPin size={15} />
-                                        <span>
-                                            Planting in Ennis & Ellis County,
-                                            Texas
-                                        </span>
-                                    </div>
-                                    <h1>
-                                        A safe place to plant deep roots and
-                                        experience real life.
-                                    </h1>
-                                    <p className="hero-lead">
-                                        Whether you have never been part of a
-                                        church, feel burned out by institutional
-                                        religion, or are walking through a hard
-                                        season, you belong here. No hype. No
-                                        pressure. Just honest conversations,
-                                        shared meals, and the grace of Jesus.
-                                    </p>
-                                    <div className="hero-actions">
-                                        <button
-                                            type="button"
-                                            className="btn btn-primary"
-                                            onClick={() => navigateTo("groups")}
-                                        >
-                                            Explore Rooted Groups{" "}
-                                            <ArrowRight size={18} />
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn btn-secondary"
-                                            onClick={() => navigateTo("about")}
-                                        >
-                                            Our Story & Vision
-                                        </button>
-                                    </div>
-                                </div>
-
-                                <div className="hero-card">
-                                    <div className="verse-badge">
-                                        <BookOpen size={16} />
-                                        <span>
-                                            {CHURCH_DATA.themeVerse.reference}
-                                        </span>
-                                    </div>
-                                    <blockquote>
-                                        “{CHURCH_DATA.themeVerse.text}”
-                                    </blockquote>
-                                    <div className="hero-card-divider" />
-                                    <div className="hero-card-stats">
-                                        <div>
-                                            <strong>Coffee Shops</strong>
-                                            <span>7-Week Rooted Groups</span>
-                                        </div>
-                                        <div>
-                                            <strong>Host Homes</strong>
-                                            <span>Weekly Sunday Branches</span>
-                                        </div>
-                                    </div>
-                                </div>
+            <main id="top">
+                {/* Hero Section */}
+                <section className="hero-section">
+                    <div className="container hero-grid">
+                        <div className="hero-copy">
+                            <div className="location-pill">
+                                <MapPin size={14} />
+                                <span>{CHURCH_DATA.location}</span>
                             </div>
-                        </section>
-
-                        {/* Who This Is For */}
-                        <section className="section section-alt">
-                            <div className="container">
-                                <div className="section-header center">
-                                    <span className="eyebrow">
-                                        A Different Kind of Church
-                                    </span>
-                                    <h2>
-                                        Built for Real People, Not Religious
-                                        Performance
-                                    </h2>
-                                    <p>
-                                        We are intentionally forming a simple,
-                                        relational church family in Ellis County
-                                        for neighbors from every background.
-                                    </p>
-                                </div>
-
-                                <div className="cards-grid three-col">
-                                    <div className="info-card">
-                                        <div className="icon-box sage">
-                                            <Compass size={22} />
-                                        </div>
-                                        <h3>Curious & Unaffiliated</h3>
-                                        <p>
-                                            Never grew up in church or have
-                                            honest doubts about Christianity?
-                                            Ask real questions over free coffee
-                                            with zero awkward pressure.
-                                        </p>
-                                    </div>
-
-                                    <div className="info-card">
-                                        <div className="icon-box slate">
-                                            <ShieldCheck size={22} />
-                                        </div>
-                                        <h3>Weary of Church Culture</h3>
-                                        <p>
-                                            Tired of stages, smoke machines, and
-                                            consumer religion? Rediscover
-                                            authentic faith centered around
-                                            living-room gatherings and real
-                                            friendships.
-                                        </p>
-                                    </div>
-
-                                    <div className="info-card">
-                                        <div className="icon-box warm">
-                                            <Heart size={22} />
-                                        </div>
-                                        <h3>Carrying Heavy Burdens</h3>
-                                        <p>
-                                            Walking through stress, grief, or
-                                            life transitions? You don’t have to
-                                            pretend to have it all together to
-                                            be welcomed and loved here.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* 3 Pillars Preview */}
-                        <section className="section">
-                            <div className="container">
-                                <div className="section-header center">
-                                    <span className="eyebrow">Our Rhythm</span>
-                                    <h2>Invite. Invest. Ignite.</h2>
-                                    <p>{CHURCH_DATA.mission}</p>
-                                </div>
-
-                                <div className="cards-grid three-col">
-                                    {CHURCH_DATA.pillars.map((pillar, idx) => (
-                                        <div
-                                            key={pillar.title}
-                                            className="pillar-card"
-                                        >
-                                            <span className="pillar-number">
-                                                0{idx + 1}
-                                            </span>
-                                            <h3>{pillar.title}</h3>
-                                            <h4>{pillar.subtitle}</h4>
-                                            <p>{pillar.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </section>
-
-                        {/* Pathway Snapshot */}
-                        <section className="section section-sage-tint">
-                            <div className="container">
-                                <div className="section-header center">
-                                    <span className="eyebrow">
-                                        How We Gather
-                                    </span>
-                                    <h2>Three Simple Environments</h2>
-                                    <p>
-                                        We trade rows in a giant auditorium for
-                                        circles in coffee shops and living rooms
-                                        across Ellis County.
-                                    </p>
-                                </div>
-
-                                <div className="cards-grid three-col">
-                                    {CHURCH_DATA.pathways.map((step) => (
-                                        <div
-                                            key={step.id}
-                                            className="pathway-card"
-                                        >
-                                            <span className="badge">
-                                                {step.badge}
-                                            </span>
-                                            <h3>{step.title}</h3>
-                                            <p className="pathway-meta">
-                                                {step.schedule}
-                                            </p>
-                                            <p>{step.summary}</p>
-                                            <button
-                                                type="button"
-                                                className="text-link"
-                                                onClick={() =>
-                                                    navigateTo("groups")
-                                                }
-                                            >
-                                                See how it works{" "}
-                                                <ArrowRight size={16} />
-                                            </button>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-                        </section>
-                    </>
-                )}
-
-                {/* ================= ABOUT / WHO WE ARE VIEW ================= */}
-                {activeTab === "about" && (
-                    <section className="section">
-                        <div className="container">
-                            <div className="section-header">
-                                <span className="eyebrow">Who We Are</span>
-                                <h1>Rooted in Jesus. Growing in Community.</h1>
-                                <p className="lead-text">
-                                    {CHURCH_DATA.vision}
-                                </p>
-                            </div>
-
-                            <div className="mission-banner">
-                                <div>
-                                    <span className="eyebrow light">
-                                        Our Core Mission
-                                    </span>
-                                    <p>{CHURCH_DATA.mission}</p>
-                                </div>
-                            </div>
-
-                            <div className="section-subblock">
-                                <h2>Our Core Values</h2>
-                                <p className="sub-desc">
-                                    These five convictions shape how we treat
-                                    one another, raise our families, and love
-                                    our neighbors in Ennis and across Ellis
-                                    County.
-                                </p>
-
-                                <div className="values-list">
-                                    {CHURCH_DATA.values.map((val) => (
-                                        <div
-                                            key={val.title}
-                                            className="value-row"
-                                        >
-                                            <div className="value-title-col">
-                                                <h3>{val.title}</h3>
-                                                <span className="scripture-tag">
-                                                    {val.scripture}
-                                                </span>
-                                            </div>
-                                            <p>{val.description}</p>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            <div className="cta-box">
-                                <div>
-                                    <h3>Want to learn more over coffee?</h3>
-                                    <p>
-                                        We’d love to hear your story and answer
-                                        any questions you have about Rooted Life
-                                        Church.
-                                    </p>
-                                </div>
+                            <h1>
+                                A safe place to plant deep roots and experience
+                                real life.
+                            </h1>
+                            <p className="hero-lead">
+                                Whether you’ve never been part of a church, feel
+                                burned out by institutional religion, or are
+                                carrying a heavy load, you belong here. No hype.
+                                No pressure. Just honest conversations, shared
+                                meals, and the grace of Jesus.
+                            </p>
+                            <div className="hero-actions">
                                 <button
                                     type="button"
                                     className="btn btn-primary"
-                                    onClick={() => navigateTo("connect")}
+                                    onClick={() => scrollToSection("groups")}
                                 >
-                                    Connect With Us
+                                    Explore Groups <ArrowRight size={18} />
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-secondary"
+                                    onClick={() => scrollToSection("connect")}
+                                >
+                                    Say Hello
                                 </button>
                             </div>
                         </div>
-                    </section>
-                )}
 
-                {/* ================= GROUPS & BRANCHES VIEW ================= */}
-                {activeTab === "groups" && (
-                    <section className="section">
-                        <div className="container">
-                            <div className="section-header">
-                                <span className="eyebrow">
-                                    Discipleship & Community
-                                </span>
-                                <h1>
-                                    From Coffee Shop Conversations to Home
-                                    Family
-                                </h1>
-                                <p className="lead-text">
-                                    Instead of building a large institutional
-                                    building first, we grow organically through
-                                    small, welcoming gatherings where everyone
-                                    is known by name.
-                                </p>
+                        <div className="verse-card">
+                            <div className="verse-badge">
+                                <BookOpen size={16} />
+                                <span>{CHURCH_DATA.themeVerse.reference}</span>
                             </div>
+                            <blockquote>
+                                “{CHURCH_DATA.themeVerse.text}”
+                            </blockquote>
+                        </div>
+                    </div>
+                </section>
 
-                            <div className="pathway-detail-stack">
-                                {CHURCH_DATA.pathways.map((item) => (
-                                    <div key={item.id} className="detail-panel">
-                                        <div className="detail-header">
-                                            <div>
-                                                <span className="badge">
-                                                    {item.badge}
-                                                </span>
-                                                <h2>{item.title}</h2>
-                                            </div>
-                                            <div className="detail-pills">
-                                                <span>
-                                                    <Calendar size={15} />{" "}
-                                                    {item.schedule}
-                                                </span>
-                                                <span>
-                                                    <Users size={15} />{" "}
-                                                    {item.size}
-                                                </span>
-                                            </div>
-                                        </div>
+                {/* Who We Are & Core Values */}
+                <section id="who-we-are" className="section section-white">
+                    <div className="container">
+                        <div className="section-header center">
+                            <span className="eyebrow">Who We Are</span>
+                            <h2>Simple Church. Real Relationships.</h2>
+                            <p>{CHURCH_DATA.mission}</p>
+                        </div>
 
-                                        <p className="detail-summary">
-                                            {item.summary}
-                                        </p>
+                        <div className="values-grid">
+                            {CHURCH_DATA.values.map((val) => (
+                                <div key={val.title} className="value-card">
+                                    <Heart size={20} className="value-icon" />
+                                    <h3>{val.title}</h3>
+                                    <p>{val.description}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-                                        <div className="highlights-grid">
-                                            {item.highlights.map((point) => (
-                                                <div
-                                                    key={point}
-                                                    className="highlight-item"
-                                                >
-                                                    <CheckCircle2
-                                                        size={18}
-                                                        className="check-icon"
-                                                    />
-                                                    <span>{point}</span>
-                                                </div>
-                                            ))}
-                                        </div>
+                {/* Two Main Groups: Rooted & Branches */}
+                <section id="groups" className="section section-sage">
+                    <div className="container">
+                        <div className="section-header center">
+                            <span className="eyebrow">How We Gather</span>
+                            <h2>Two Ways to Get Connected</h2>
+                            <p>
+                                We don’t start with a big building. We grow
+                                through small, welcoming gatherings right here
+                                in Ennis.
+                            </p>
+                        </div>
 
-                                        <div className="detail-footer">
-                                            <button
-                                                type="button"
-                                                className="btn btn-primary"
-                                                onClick={() => {
-                                                    setFormState((prev) => ({
-                                                        ...prev,
-                                                        interest: item.title,
-                                                    }))
-                                                    navigateTo("connect")
-                                                }}
-                                            >
-                                                {item.ctaText}{" "}
-                                                <ArrowRight size={16} />
-                                            </button>
-                                        </div>
+                        <div className="groups-grid">
+                            {CHURCH_DATA.groups.map((group) => (
+                                <div key={group.id} className="group-card">
+                                    <span className="badge">{group.badge}</span>
+                                    <h3>{group.title}</h3>
+
+                                    <div className="group-meta">
+                                        <span>
+                                            <Calendar size={15} />{" "}
+                                            {group.schedule}
+                                        </span>
+                                        <span>
+                                            <Users size={15} /> {group.size}
+                                        </span>
                                     </div>
-                                ))}
-                            </div>
 
-                            {/* Monthly Gathering Callout */}
-                            <div className="monthly-callout">
-                                <Sparkles size={28} className="callout-icon" />
-                                <div>
-                                    <h3>
-                                        Monthly Collective Sunday Gatherings
-                                    </h3>
-                                    <p>
-                                        Once a month on Sunday, all of our home
-                                        Branches come together in one room to
-                                        share a meal, worship together,
-                                        celebrate baptisms, take communion, and
-                                        hear stories of what God is doing across
-                                        Ellis County.
+                                    <p className="group-desc">
+                                        {group.description}
                                     </p>
-                                </div>
-                            </div>
 
-                            {/* FAQ Accordion */}
-                            <div className="faq-section">
-                                <h2>Frequently Asked Questions</h2>
-                                <div className="faq-list">
-                                    {CHURCH_DATA.faqs.map((faq, idx) => {
-                                        const isOpen = openFaq === idx
-                                        return (
-                                            <div
-                                                key={faq.question}
-                                                className="faq-item"
-                                            >
-                                                <button
-                                                    type="button"
-                                                    className="faq-question"
-                                                    onClick={() =>
-                                                        setOpenFaq(
-                                                            isOpen ? -1 : idx,
-                                                        )
-                                                    }
-                                                    aria-expanded={isOpen}
-                                                >
-                                                    <span>{faq.question}</span>
-                                                    <ChevronDown
-                                                        size={20}
-                                                        className={`chevron ${isOpen ? "rotated" : ""}`}
-                                                    />
-                                                </button>
-                                                {isOpen && (
-                                                    <div className="faq-answer">
-                                                        {faq.answer}
-                                                    </div>
-                                                )}
-                                            </div>
-                                        )
-                                    })}
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                )}
+                                    <ul className="perks-list">
+                                        {group.perks.map((perk) => (
+                                            <li key={perk}>
+                                                <CheckCircle2
+                                                    size={17}
+                                                    className="check-icon"
+                                                />
+                                                <span>{perk}</span>
+                                            </li>
+                                        ))}
+                                    </ul>
 
-                {/* ================= OUTREACH / SERVE VIEW ================= */}
-                {activeTab === "outreach" && (
-                    <section className="section">
-                        <div className="container">
-                            <div className="section-header">
-                                <span className="eyebrow">
-                                    Love Our Neighbors
-                                </span>
-                                <h1>Serving Ennis & Ellis County Together</h1>
-                                <p className="lead-text">
-                                    We believe the church exists to bless its
-                                    city. Every Branch and Rooted Group actively
-                                    looks for practical ways to care for
-                                    families, schools, and neighbors in need.
-                                </p>
-                            </div>
-
-                            <div className="cards-grid two-col">
-                                {CHURCH_DATA.outreachProjects.map((project) => (
-                                    <div
-                                        key={project.title}
-                                        className="info-card"
+                                    <button
+                                        type="button"
+                                        className="btn btn-primary btn-full"
+                                        onClick={() =>
+                                            handleSelectGroup(group.title)
+                                        }
                                     >
-                                        <h3>{project.title}</h3>
-                                        <p>{project.detail}</p>
-                                    </div>
-                                ))}
-                            </div>
+                                        {group.cta} <ArrowRight size={16} />
+                                    </button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
 
-                            <div className="section-subblock">
-                                <h2>Annual Service Rhythm</h2>
-                                <p className="sub-desc">
-                                    Throughout the year, our Branches rally
-                                    around seasonal service opportunities across
-                                    Ellis County:
-                                </p>
-                                <div className="calendar-grid">
-                                    {CHURCH_DATA.annualCalendar.map((entry) => (
-                                        <div
-                                            key={entry.month}
-                                            className="calendar-card"
-                                        >
-                                            <strong>{entry.month}</strong>
-                                            <span>{entry.focus}</span>
-                                        </div>
-                                    ))}
+                {/* Contact Section */}
+                <section id="connect" className="section section-white">
+                    <div className="container connect-grid">
+                        <div className="connect-copy">
+                            <span className="eyebrow">Get In Touch</span>
+                            <h2>Let’s Grab a Cup of Coffee</h2>
+                            <p>
+                                Have a question about Rooted Life Church, want
+                                to join an upcoming Rooted Group, or looking for
+                                a Sunday Branch in Ennis? Send us a quick note
+                                and we’ll reply personally.
+                            </p>
+
+                            <div className="contact-perks">
+                                <div className="contact-perk-item">
+                                    <Coffee size={20} />
+                                    <div>
+                                        <strong>First Coffee Is On Us</strong>
+                                        <span>
+                                            Meet at a local Ennis coffee shop—no
+                                            strings attached.
+                                        </span>
+                                    </div>
+                                </div>
+                                <div className="contact-perk-item">
+                                    <Home size={20} />
+                                    <div>
+                                        <strong>Neighborhood Branches</strong>
+                                        <span>
+                                            Weekly home gatherings right here in
+                                            Ennis.
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </section>
-                )}
 
-                {/* ================= CONNECT / CONTACT VIEW ================= */}
-                {activeTab === "connect" && (
-                    <section className="section">
-                        <div className="container connect-grid">
-                            <div className="connect-info">
-                                <span className="eyebrow">
-                                    Take a Next Step
-                                </span>
-                                <h1>Let’s Grab a Cup of Coffee</h1>
-                                <p>
-                                    Have questions about Rooted Life Church,
-                                    want to join an upcoming 7-week Rooted Group
-                                    in Ennis, or looking for a Sunday Branch?
-                                    Fill out the form and we’ll reach out
-                                    personally—no spam and no pressure.
-                                </p>
-
-                                <div className="contact-highlights">
-                                    <div className="contact-item">
-                                        <Coffee size={20} />
-                                        <div>
-                                            <strong>
-                                                First Coffee Is On Us
-                                            </strong>
-                                            <span>
-                                                Join a Rooted Group at a local
-                                                coffee shop.
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="contact-item">
-                                        <Home size={20} />
-                                        <div>
-                                            <strong>
-                                                Neighborhood Branches
-                                            </strong>
-                                            <span>
-                                                Find a welcoming home group near
-                                                your family.
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="contact-item">
-                                        <MapPin size={20} />
-                                        <div>
-                                            <strong>
-                                                Rooted in Ellis County
-                                            </strong>
-                                            <span>
-                                                Launching in Ennis and expanding
-                                                across the county.
-                                            </span>
-                                        </div>
-                                    </div>
+                        <div className="form-card">
+                            {status === "success" ? (
+                                <div className="form-feedback">
+                                    <CheckCircle2
+                                        size={44}
+                                        className="success-icon"
+                                    />
+                                    <h3>Message Sent!</h3>
+                                    <p>
+                                        Thanks for reaching out,{" "}
+                                        <b>{formState.name}</b>. Your message
+                                        has been sent to our leadership, and
+                                        we’ll get in touch with you soon!
+                                    </p>
+                                    <br />
+                                    <button
+                                        type="button"
+                                        className="btn btn-secondary"
+                                        onClick={() => {
+                                            setStatus("idle")
+                                            setFormState({
+                                                name: "",
+                                                email: "",
+                                                interest: "Rooted Groups",
+                                                message: "",
+                                            })
+                                        }}
+                                    >
+                                        Send Another Message
+                                    </button>
                                 </div>
-                            </div>
-
-                            <div className="form-card">
-                                {submitted ? (
-                                    <div className="form-success">
-                                        <CheckCircle2
-                                            size={48}
-                                            className="success-icon"
-                                        />
-                                        <h2>
-                                            Thanks for Reaching Out,{" "}
-                                            {formState.name || "Friend"}!
-                                        </h2>
-                                        <p>
-                                            We’ve received your note regarding{" "}
-                                            <strong>
-                                                {formState.interest}
-                                            </strong>{" "}
-                                            in <strong>{formState.city}</strong>
-                                            . Someone from our team will follow
-                                            up with you soon.
-                                        </p>
-                                        <button
-                                            type="button"
-                                            className="btn btn-secondary"
-                                            onClick={() => {
-                                                setSubmitted(false)
+                            ) : (
+                                <form
+                                    onSubmit={handleSubmit}
+                                    className="contact-form"
+                                >
+                                    <div className="form-group">
+                                        <label htmlFor="name">Name</label>
+                                        <input
+                                            id="name"
+                                            type="text"
+                                            required
+                                            placeholder="Your name"
+                                            value={formState.name}
+                                            onChange={(e) =>
                                                 setFormState({
-                                                    name: "",
-                                                    email: "",
-                                                    city: "Ennis",
-                                                    interest:
-                                                        "Rooted Group (Coffee Shop)",
-                                                    message: "",
+                                                    ...formState,
+                                                    name: e.target.value,
                                                 })
-                                            }}
-                                        >
-                                            Send Another Message
-                                        </button>
+                                            }
+                                        />
                                     </div>
-                                ) : (
-                                    <form
-                                        onSubmit={handleFormSubmit}
-                                        className="connect-form"
-                                    >
-                                        <h2>Connect With Rooted Life</h2>
-                                        <div className="form-group">
-                                            <label htmlFor="name">
-                                                Your Name
-                                            </label>
-                                            <input
-                                                id="name"
-                                                type="text"
-                                                required
-                                                placeholder="Jane Doe"
-                                                value={formState.name}
-                                                onChange={(e) =>
-                                                    setFormState({
-                                                        ...formState,
-                                                        name: e.target.value,
-                                                    })
-                                                }
-                                            />
-                                        </div>
 
-                                        <div className="form-group">
-                                            <label htmlFor="email">
-                                                Email Address
-                                            </label>
-                                            <input
-                                                id="email"
-                                                type="email"
-                                                required
-                                                placeholder="you@example.com"
-                                                value={formState.email}
-                                                onChange={(e) =>
-                                                    setFormState({
-                                                        ...formState,
-                                                        email: e.target.value,
-                                                    })
-                                                }
-                                            />
-                                        </div>
+                                    <div className="form-group">
+                                        <label htmlFor="email">Email</label>
+                                        <input
+                                            id="email"
+                                            type="email"
+                                            required
+                                            placeholder="you@example.com"
+                                            value={formState.email}
+                                            onChange={(e) =>
+                                                setFormState({
+                                                    ...formState,
+                                                    email: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
 
-                                        <div className="form-row">
-                                            <div className="form-group">
-                                                <label htmlFor="city">
-                                                    Your Area
-                                                </label>
-                                                <select
-                                                    id="city"
-                                                    value={formState.city}
-                                                    onChange={(e) =>
-                                                        setFormState({
-                                                            ...formState,
-                                                            city: e.target
-                                                                .value,
-                                                        })
-                                                    }
-                                                >
-                                                    <option value="Ennis">
-                                                        Ennis
-                                                    </option>
-                                                    <option value="Waxahachie">
-                                                        Waxahachie
-                                                    </option>
-                                                    <option value="Midlothian">
-                                                        Midlothian
-                                                    </option>
-                                                    <option value="Red Oak">
-                                                        Red Oak
-                                                    </option>
-                                                    <option value="Other Ellis County">
-                                                        Other Ellis County
-                                                    </option>
-                                                </select>
-                                            </div>
-
-                                            <div className="form-group">
-                                                <label htmlFor="interest">
-                                                    I’m Interested In...
-                                                </label>
-                                                <select
-                                                    id="interest"
-                                                    value={formState.interest}
-                                                    onChange={(e) =>
-                                                        setFormState({
-                                                            ...formState,
-                                                            interest:
-                                                                e.target.value,
-                                                        })
-                                                    }
-                                                >
-                                                    <option value="Rooted Group (Coffee Shop)">
-                                                        Rooted Group (Coffee
-                                                        Shop)
-                                                    </option>
-                                                    <option value="Branches (Sunday Home Group)">
-                                                        Branches (Sunday Home
-                                                        Group)
-                                                    </option>
-                                                    <option value="Serving / Outreach">
-                                                        Serving / Outreach
-                                                    </option>
-                                                    <option value="Just Asking Questions">
-                                                        Just Asking Questions
-                                                    </option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div className="form-group">
-                                            <label htmlFor="message">
-                                                Questions or Note (Optional)
-                                            </label>
-                                            <textarea
-                                                id="message"
-                                                rows="4"
-                                                placeholder="Tell us a little about yourself or any questions you have..."
-                                                value={formState.message}
-                                                onChange={(e) =>
-                                                    setFormState({
-                                                        ...formState,
-                                                        message: e.target.value,
-                                                    })
-                                                }
-                                            />
-                                        </div>
-
-                                        <button
-                                            type="submit"
-                                            className="btn btn-primary btn-full"
+                                    <div className="form-group">
+                                        <label htmlFor="interest">
+                                            Interested In
+                                        </label>
+                                        <select
+                                            id="interest"
+                                            value={formState.interest}
+                                            onChange={(e) =>
+                                                setFormState({
+                                                    ...formState,
+                                                    interest: e.target.value,
+                                                })
+                                            }
                                         >
-                                            Send Message <Send size={16} />
-                                        </button>
-                                    </form>
-                                )}
-                            </div>
+                                            <option value="Rooted Groups">
+                                                Rooted Group (Coffee Shop)
+                                            </option>
+                                            <option value="Branches">
+                                                Branches (Sunday Home Group)
+                                            </option>
+                                            <option value="Just Saying Hello">
+                                                Just Saying Hello
+                                            </option>
+                                        </select>
+                                    </div>
+
+                                    <div className="form-group">
+                                        <label htmlFor="message">
+                                            Message (Optional)
+                                        </label>
+                                        <textarea
+                                            id="message"
+                                            rows="3"
+                                            placeholder="Questions, best days to meet, or anything you'd like to share..."
+                                            value={formState.message}
+                                            onChange={(e) =>
+                                                setFormState({
+                                                    ...formState,
+                                                    message: e.target.value,
+                                                })
+                                            }
+                                        />
+                                    </div>
+
+                                    {status === "error" && (
+                                        <p className="error-text">
+                                            Something went wrong sending your
+                                            message. You can also email us
+                                            directly at{" "}
+                                            <a
+                                                href={`mailto:${CHURCH_DATA.contactEmail}`}
+                                            >
+                                                {CHURCH_DATA.contactEmail}
+                                            </a>
+                                            .
+                                        </p>
+                                    )}
+
+                                    <button
+                                        type="submit"
+                                        className="btn btn-primary btn-full"
+                                        disabled={status === "submitting"}
+                                    >
+                                        {status === "submitting"
+                                            ? "Sending..."
+                                            : "Send Message"}{" "}
+                                        <Send size={16} />
+                                    </button>
+                                </form>
+                            )}
                         </div>
-                    </section>
-                )}
+                    </div>
+                </section>
             </main>
 
             {/* Footer */}
             <footer className="site-footer">
                 <div className="container footer-inner">
                     <div className="footer-brand">
-                        <div className="footer-logo-row">
-                            <img
-                                src={CHURCH_DATA.logoPath}
-                                alt="Rooted Life Church Logo"
-                                className="footer-logo-img"
-                            />
-                            <span>Rooted Life Church</span>
+                        <img
+                            src={CHURCH_DATA.logoPath}
+                            alt="Rooted Life Church Logo"
+                            className="footer-logo-img"
+                        />
+                        <div>
+                            <strong>Rooted Life Church</strong>
+                            <span>
+                                Ennis, Texas • {CHURCH_DATA.contactEmail}
+                            </span>
                         </div>
-                        <p>
-                            Helping people root their lives in Jesus through
-                            authentic community and discipleship across Ennis
-                            and Ellis County, Texas.
-                        </p>
-                    </div>
-
-                    <div className="footer-links">
-                        <strong>Explore</strong>
-                        {navItems.map((item) => (
-                            <button
-                                key={item.id}
-                                type="button"
-                                onClick={() => navigateTo(item.id)}
-                            >
-                                {item.label}
-                            </button>
-                        ))}
-                    </div>
-
-                    <div className="footer-verse">
-                        <strong>{CHURCH_DATA.themeVerse.reference}</strong>
-                        <p>
-                            “Rooted and built up in him and established in the
-                            faith... abounding in thanksgiving.”
-                        </p>
                     </div>
                 </div>
                 <div className="footer-bottom">
                     <div className="container">
-                        <span>
-                            © {new Date().getFullYear()} Rooted Life Church •
-                            Ellis County, Texas
+                        <span className="copyright">
+                            © {new Date().getFullYear()} Rooted Life Church
                         </span>
                     </div>
                 </div>
